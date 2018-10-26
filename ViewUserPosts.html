@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Select a user, then click the submit to see all posts of the user.</h2>
+<form action="ViewUserPosts.php" method="post">
+<select name="userName">
+
+<?php
+$mysqli = new mysqli("mysql.eecs.ku.edu", "j632c688", "bae9waiC", "j632c688");
+
+/* check connection */
+if ($mysqli->connect_errno) {
+    printf("Connect failed: %s\n", $mysqli->connect_error);
+    exit();
+}
+
+$query = "SELECT user_id from Users";
+$result = $mysqli->query($query);
+
+if($result->num_rows > 0)
+{
+
+	while($row = $result->fetch_assoc())
+	{
+		echo "<option value=\"" . $row["user_id"] . "\">" .  $row["user_id"] . "</option>";
+	}	
+}
+else
+{	
+	echo "No users.";	
+}
+
+/* close connection */
+$mysqli->close();
+?>
+
+</select>
+<h4>click the submit button to see.</h4>
+<input type="submit" value="Submit">
+</form>
+
+  
+</body>
+</html>
